@@ -1,0 +1,7 @@
+.DS_Store
+*.EDF
+*.pyc
+__pycache__
+*.pdf
+*.gz
+data
