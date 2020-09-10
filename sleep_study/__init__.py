@@ -1,5 +1,6 @@
 from . import info
 from . import data
+from . import dataset
 
 data_dir = None
 
