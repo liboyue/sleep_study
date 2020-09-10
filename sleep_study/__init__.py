@@ -1,4 +1,12 @@
-data_dir = '/ux0/data/NCH_Sleep_Data'
-
 from . import info
 from . import data
+
+data_dir = None
+
+def init(tmp_dir='/ux0/data/NCH_Sleep_Data'):
+    global data_dir
+    data_dir = tmp_dir
+    data.study_list = data.init_study_list()
+
+    # Load the sleep study info
+    info.SLEEP_STUDY = info.load_health_info(info.SLEEP_STUDY)

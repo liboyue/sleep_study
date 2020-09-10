@@ -1,6 +1,7 @@
 import os
 import pandas as pd
-from . import data_dir
+
+import sleep_study as ss
 
 EVENT_DICT = {
         'Sleep stage W' : 0,
@@ -11,11 +12,11 @@ EVENT_DICT = {
         }
 
 FREQ_BANDS = [
-        [8, 12], # alpha
-        # [12, 30], # beta
-        # [1, 4], # delta
-        # [4, 8], # theta
-        [30, 100], # gamma
+        [8, 12],    # alpha
+        [12, 30],   # beta
+        [1, 4],     # delta
+        [4, 8],     # theta
+        [30, 100],  # gamma
         ]
 
 EEG_CH_NAMES = [
@@ -53,14 +54,6 @@ NONE_EEG_CH_NAMES = [
 
 ALL_CH_NAMES = EEG_CH_NAMES + NONE_EEG_CH_NAMES
 
-
-def load_health_info(name):
-    if type(name) == str:
-        path = os.path.join(data_dir, 'Health_Data', name)
-        name = pd.read_csv(path)
-    return name
-
-
 # The Following files are loaded only when needed
 DEMOGRAPHIC = 'DEMOGRAPHIC.csv'
 DIAGNOSIS = 'DIAGNOSIS.csv'
@@ -72,10 +65,8 @@ PROCEDURE = 'PROCEDURE.csv'
 SLEEP_ENC_ID = 'SLEEP_ENC_ID.csv'
 SLEEP_STUDY = 'SLEEP_STUDY.csv'
 
-# Load the sleep study info
-SLEEP_STUDY = load_health_info(SLEEP_STUDY)
-
-# def __getattr__(name):
-    # if name == 'y':
-        # return 3
-    # raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+def load_health_info(name):
+    if type(name) == str:
+        path = os.path.join(ss.data_dir, 'Health_Data', name)
+        name = pd.read_csv(path)
+    return name
