@@ -12,10 +12,11 @@ EVENT_DICT = {
         }
 
 FREQ_BANDS = [
-        [8, 12],    # alpha
-        [12, 30],   # beta
+        [0.5, 4],   # delta
         [1, 4],     # delta
         [4, 8],     # theta
+        [8, 12],    # alpha
+        [12, 30],   # beta
         [30, 100],  # gamma
         ]
 
@@ -70,3 +71,57 @@ def load_health_info(name):
         path = os.path.join(ss.data_dir, 'Health_Data', name)
         name = pd.read_csv(path)
     return name
+
+
+def hist(l, h={}):
+    for k in l:
+        try:
+            h[k] += 1
+        except:
+            h[k] = 1
+    return h
+
+def normalize(h):
+    N = sum(h.values())
+    for k in h.keys():
+        h[k] /= N
+    return h
+
+def patient_cohort():
+    global DEMOGRAPHIC
+    DEMOGRAPHIC = load_health_info(DEMOGRAPHIC)
+
+    N = len(DEMOGRAPHIC)
+
+    DEMOGRAPHIC = a
+
+    race_hist = hist(DEMOGRAPHIC.RACE_DESCR.values)
+
+    for race in list(race_hist.keys()):
+        if race != 'Unknown' and race_hist[race] <= 10:
+            race_hist['Unknown'] += race_hist[race]
+            del race_hist[race]
+
+    normalize(race_hist)
+
+    gender_hist = hist(DEMOGRAPHIC.GENDER_DESCR.values)
+    normalize(gender_hist)
+
+
+    global ENCOUNTER
+    ENCOUNTER = load_health_info(ENCOUNTER)
+
+
+    a = ENCOUNTER[['STUDY_PAT_ID', 'VISIT_START_DATETIME', 'VISIT_END_DATETIME']]
+
+    a = ENCOUNTER[['STUDY_PAT_ID', 'ENCOUNTER_DATE']]
+    # df['DataFrame Column'] = pd.to_datetime(df['DataFrame Column'], format=specify your format)
+    a['ENCOUNTER_DATE'] = pd.to_datetime(a['ENCOUNTER_DATE'])
+    b = a.groupby('STUDY_PAT_ID')
+    b.groups.keys()
+
+    c = b.ENCOUNTER_DATE.max() - b.ENCOUNTER_DATE.min()
+    c = c.values / np.timedelta64(1, 'D')
+    c /= 365
+
+
