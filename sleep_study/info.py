@@ -20,6 +20,7 @@ FREQ_BANDS = [
         [30, 100],  # gamma
         ]
 
+# varies per study
 EEG_CH_NAMES = [
         'EEG F4-M1',
         'EEG O2-M1',
@@ -30,6 +31,7 @@ EEG_CH_NAMES = [
         'EEG CZ-O1',
         ]
 
+# varies per study
 NONE_EEG_CH_NAMES = [
         'ECG EKG2-EKG',
         'EOG LOC-M2',
@@ -65,6 +67,18 @@ PROCEDURE_SURG_HX = 'PROCEDURE_SURG_HX.csv'
 PROCEDURE = 'PROCEDURE.csv'
 SLEEP_ENC_ID = 'SLEEP_ENC_ID.csv'
 SLEEP_STUDY = 'SLEEP_STUDY.csv'
+
+HEALTH_DATA_FNS = [DEMOGRAPHIC,
+                   DIAGNOSIS, 
+                   ENCOUNTER, 
+                   MEASUREMENT, 
+                   MEDICATION, 
+                   PROCEDURE_SURG_HX, 
+                   PROCEDURE, 
+                   SLEEP_ENC_ID, 
+                   SLEEP_STUDY]
+INTERVAL = 30 # seconds.
+REFERENCE_FREQ = 128 # Hz. 80% of the studies have sampling frequency of 256 HZ.
 
 def load_health_info(name):
     if type(name) == str:

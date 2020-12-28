@@ -58,3 +58,33 @@ def create_dataset(output_dir='~/sleep_study_dataset'):
         print('Compressed, used %.2f seconds' % (end - start))
 
 
+def get_studies_by_patient_age(low, high, txt_path='age_file.csv'):
+    study_list = []
+    ages = []
+    df = pd.read_csv(txt_path, sep=",", dtype={'FILE_NAME': 'str', 'AGE_AT_SLEEP_STUDY_DAYS': 'int'})
+    
+    df = df[(df.AGE_AT_SLEEP_STUDY_DAYS >= low*365) & (df.AGE_AT_SLEEP_STUDY_DAYS < high*365)]
+    print("found", len(df), "patients between", low, "(incl.) and", high, "(excl.) years old.")
+
+    return df.FILE_NAME.tolist(), df.AGE_AT_SLEEP_STUDY_DAYS.tolist()
+
+def annotation_stats():
+    output_dir = './'
+
+    broken = []
+    total = len(ss.data.study_list)
+
+    for i, name in enumerate(ss.data.study_list):
+
+        if i % 100 == 0:
+            print('Processing %d of %d' % (i, total))
+
+        path = os.path.join(ss.data_dir, 'Sleep_Data', name + '.tsv')
+        df = pd.read_csv(path, sep='\t')
+
+        if check_annotations(df) == False:
+            broken.append(name)
+
+    print('Processd %d files' % i)
+    print('%d files have no labeled sleeping stage' % len(broken))
+
