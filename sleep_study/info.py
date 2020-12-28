@@ -81,10 +81,37 @@ INTERVAL = 30 # seconds.
 REFERENCE_FREQ = 128 # Hz. 80% of the studies have sampling frequency of 256 HZ.
 
 def load_health_info(name):
-    if type(name) == str:
-        path = os.path.join(ss.data_dir, 'Health_Data', name)
-        name = pd.read_csv(path)
-    return name
+    assert type(name) == str
+        
+    path = os.path.join(ss.data_dir, 'Health_Data', name)
+    df = pd.read_csv(path)
+    if name == DEMOGRAPHIC:
+        df['BIRTH_DATE'] = pd.to_datetime(df['BIRTH_DATE'], infer_datetime_format=True)
+    elif name == DIAGNOSIS:
+        df['DX_START_DATETIME'] = pd.to_datetime(df['DX_START_DATETIME'], infer_datetime_format=True)
+        df['DX_END_DATETIME'] = pd.to_datetime(df['DX_END_DATETIME'], infer_datetime_format=True)
+    elif name == ENCOUNTER:
+        df['ENCOUNTER_DATE'] = pd.to_datetime(df['ENCOUNTER_DATE'], infer_datetime_format=True)
+        df['VISIT_START_DATETIME'] = pd.to_datetime(df['VISIT_START_DATETIME'], infer_datetime_format=True)
+        df['VISIT_END_DATETIME'] = pd.to_datetime(df['VISIT_END_DATETIME'], infer_datetime_format=True)
+        df['ADT_ARRIVAL_DATETIME'] = pd.to_datetime(df['ADT_ARRIVAL_DATETIME'], infer_datetime_format=True)
+        df['ED_DEPARTURE_DATETIME'] = pd.to_datetime(df['ED_DEPARTURE_DATETIME'], infer_datetime_format=True)
+    elif name == MEASUREMENT:
+        df['MEAS_RECORDED_DATETIME'] = pd.to_datetime(df['MEAS_RECORDED_DATETIME'], infer_datetime_format=True)
+    elif name == MEDICATION:
+        df['MED_START_DATETIME'] = pd.to_datetime(df['MED_START_DATETIME'], infer_datetime_format=True)
+        df['MED_END_DATETIME'] = pd.to_datetime(df['MED_END_DATETIME'], infer_datetime_format=True)
+        df['MED_ORDER_DATETIME'] = pd.to_datetime(df['MED_ORDER_DATETIME'], infer_datetime_format=True)
+        df['MED_TAKEN_DATETIME'] = pd.to_datetime(df['MED_TAKEN_DATETIME'], infer_datetime_format=True)
+    elif name == PROCEDURE:
+        df['PROCEDURE_DATETIME'] = pd.to_datetime(df['PROCEDURE_DATETIME'], infer_datetime_format=True)
+    elif name == PROCEDURE_SURG_HX:
+        df['PROC_NOTED_DATE'] = pd.to_datetime(df['PROC_NOTED_DATE'], infer_datetime_format=True)
+        df['PROC_START_TIME'] = pd.to_datetime(df['PROC_START_TIME'], infer_datetime_format=True)
+        df['PROC_END_TIME'] = pd.to_datetime(df['PROC_END_TIME'], infer_datetime_format=True)
+
+
+    return df
 
 
 def hist(l, h={}):
