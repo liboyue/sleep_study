@@ -12,4 +12,4 @@ def init(tmp_dir='/ux0/data/NCH_Sleep_Data'):
     print("age information stored in", age_fn)
 
     # Load the sleep study info
-    info.SLEEP_STUDY = info.load_health_info(info.SLEEP_STUDY)
+    info.SLEEP_STUDY = info.load_health_info(info.SLEEP_STUDY, False)

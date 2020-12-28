@@ -66,7 +66,8 @@ MEDICATION = 'MEDICATION.csv'
 PROCEDURE_SURG_HX = 'PROCEDURE_SURG_HX.csv'
 PROCEDURE = 'PROCEDURE.csv'
 SLEEP_ENC_ID = 'SLEEP_ENC_ID.csv'
-SLEEP_STUDY = 'SLEEP_STUDY.csv'
+SLEEP_STUDY_NAME = 'SLEEP_STUDY.csv'
+SLEEP_STUDY = SLEEP_STUDY_NAME
 
 HEALTH_DATA_FNS = [DEMOGRAPHIC,
                    DIAGNOSIS, 
@@ -76,40 +77,43 @@ HEALTH_DATA_FNS = [DEMOGRAPHIC,
                    PROCEDURE_SURG_HX, 
                    PROCEDURE, 
                    SLEEP_ENC_ID, 
-                   SLEEP_STUDY]
+                   SLEEP_STUDY_NAME]
 INTERVAL = 30 # seconds.
 REFERENCE_FREQ = 128 # Hz. 80% of the studies have sampling frequency of 256 HZ.
 
-def load_health_info(name):
+def load_health_info(name, convert_datetime=True):
     assert type(name) == str
         
     path = os.path.join(ss.data_dir, 'Health_Data', name)
     df = pd.read_csv(path)
-    if name == DEMOGRAPHIC:
-        df['BIRTH_DATE'] = pd.to_datetime(df['BIRTH_DATE'], infer_datetime_format=True)
-    elif name == DIAGNOSIS:
-        df['DX_START_DATETIME'] = pd.to_datetime(df['DX_START_DATETIME'], infer_datetime_format=True)
-        df['DX_END_DATETIME'] = pd.to_datetime(df['DX_END_DATETIME'], infer_datetime_format=True)
-    elif name == ENCOUNTER:
-        df['ENCOUNTER_DATE'] = pd.to_datetime(df['ENCOUNTER_DATE'], infer_datetime_format=True)
-        df['VISIT_START_DATETIME'] = pd.to_datetime(df['VISIT_START_DATETIME'], infer_datetime_format=True)
-        df['VISIT_END_DATETIME'] = pd.to_datetime(df['VISIT_END_DATETIME'], infer_datetime_format=True)
-        df['ADT_ARRIVAL_DATETIME'] = pd.to_datetime(df['ADT_ARRIVAL_DATETIME'], infer_datetime_format=True)
-        df['ED_DEPARTURE_DATETIME'] = pd.to_datetime(df['ED_DEPARTURE_DATETIME'], infer_datetime_format=True)
-    elif name == MEASUREMENT:
-        df['MEAS_RECORDED_DATETIME'] = pd.to_datetime(df['MEAS_RECORDED_DATETIME'], infer_datetime_format=True)
-    elif name == MEDICATION:
-        df['MED_START_DATETIME'] = pd.to_datetime(df['MED_START_DATETIME'], infer_datetime_format=True)
-        df['MED_END_DATETIME'] = pd.to_datetime(df['MED_END_DATETIME'], infer_datetime_format=True)
-        df['MED_ORDER_DATETIME'] = pd.to_datetime(df['MED_ORDER_DATETIME'], infer_datetime_format=True)
-        df['MED_TAKEN_DATETIME'] = pd.to_datetime(df['MED_TAKEN_DATETIME'], infer_datetime_format=True)
-    elif name == PROCEDURE:
-        df['PROCEDURE_DATETIME'] = pd.to_datetime(df['PROCEDURE_DATETIME'], infer_datetime_format=True)
-    elif name == PROCEDURE_SURG_HX:
-        df['PROC_NOTED_DATE'] = pd.to_datetime(df['PROC_NOTED_DATE'], infer_datetime_format=True)
-        df['PROC_START_TIME'] = pd.to_datetime(df['PROC_START_TIME'], infer_datetime_format=True)
-        df['PROC_END_TIME'] = pd.to_datetime(df['PROC_END_TIME'], infer_datetime_format=True)
-
+    
+    if convert_datetime:
+        if name == DEMOGRAPHIC:
+            df['BIRTH_DATE'] = pd.to_datetime(df['BIRTH_DATE'], infer_datetime_format=True)
+        elif name == DIAGNOSIS:
+            df['DX_START_DATETIME'] = pd.to_datetime(df['DX_START_DATETIME'], infer_datetime_format=True)
+            df['DX_END_DATETIME'] = pd.to_datetime(df['DX_END_DATETIME'], infer_datetime_format=True)
+        elif name == ENCOUNTER:
+            df['ENCOUNTER_DATE'] = pd.to_datetime(df['ENCOUNTER_DATE'], infer_datetime_format=True)
+            df['VISIT_START_DATETIME'] = pd.to_datetime(df['VISIT_START_DATETIME'], infer_datetime_format=True)
+            df['VISIT_END_DATETIME'] = pd.to_datetime(df['VISIT_END_DATETIME'], infer_datetime_format=True)
+            df['ADT_ARRIVAL_DATETIME'] = pd.to_datetime(df['ADT_ARRIVAL_DATETIME'], infer_datetime_format=True)
+            df['ED_DEPARTURE_DATETIME'] = pd.to_datetime(df['ED_DEPARTURE_DATETIME'], infer_datetime_format=True)
+        elif name == MEASUREMENT:
+            df['MEAS_RECORDED_DATETIME'] = pd.to_datetime(df['MEAS_RECORDED_DATETIME'], infer_datetime_format=True)
+        elif name == MEDICATION:
+            df['MED_START_DATETIME'] = pd.to_datetime(df['MED_START_DATETIME'], infer_datetime_format=True)
+            df['MED_END_DATETIME'] = pd.to_datetime(df['MED_END_DATETIME'], infer_datetime_format=True)
+            df['MED_ORDER_DATETIME'] = pd.to_datetime(df['MED_ORDER_DATETIME'], infer_datetime_format=True)
+            df['MED_TAKEN_DATETIME'] = pd.to_datetime(df['MED_TAKEN_DATETIME'], infer_datetime_format=True)
+        elif name == PROCEDURE:
+            df['PROCEDURE_DATETIME'] = pd.to_datetime(df['PROCEDURE_DATETIME'], infer_datetime_format=True)
+        elif name == PROCEDURE_SURG_HX:
+            df['PROC_NOTED_DATE'] = pd.to_datetime(df['PROC_NOTED_DATE'], infer_datetime_format=True)
+            df['PROC_START_TIME'] = pd.to_datetime(df['PROC_START_TIME'], infer_datetime_format=True)
+            df['PROC_END_TIME'] = pd.to_datetime(df['PROC_END_TIME'], infer_datetime_format=True)
+        elif name == SLEEP_STUDY_NAME:
+            df['SLEEP_STUDY_START_DATETIME'] = pd.to_datetime(df['SLEEP_STUDY_START_DATETIME'])
 
     return df
 
