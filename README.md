@@ -14,4 +14,4 @@ We have not calculated AHI from our side, but we think it should be straightforw
 2. counting how many times 'Sleep stage R',  'Sleep stage N1',  'Sleep stage N2', 'Sleep stage N3' appear in the 'Description' column -> multiply this number by 30 seconds to get the Total Sleep Time.
 3. divide #1 by #2 to get the AHI for one patient in one sleep study.
 
-* Originally, we incorrectly suggested counting occurences of 'Sleep stage W' into Total Sleep Time. We thank S. Haimov for bringing it to our attention. See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4246141/ for more definitions.
+* Originally, we incorrectly suggested counting occurences of 'Sleep stage W' into Total Sleep Time. We thank S. Haimov for bringing it to our attention. See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4246141/ and https://www.sleep.pitt.edu/wp-content/uploads/2020/03/The-AASM-Manual-for-Scoring-of-Sleep-and-Associated-Events-2007-.pdf for more definitions.
